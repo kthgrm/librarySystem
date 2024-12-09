@@ -18,7 +18,7 @@
                         if(mysqli_num_rows($result) == 1){
                             $row = mysqli_fetch_assoc($result);
                             $_SESSION['user'] = $row;
-                            redirect('book-view.php', 'Login successfully!', 'success');
+                            redirect('user/book-view.php', 'Login successfully!', 'success');
                         } else {
                             $_SESSION['status'] = 'Email or password is incorrect';
                             $_SESSION['alertType'] = 'error';

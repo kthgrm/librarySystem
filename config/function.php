@@ -1,8 +1,7 @@
 <?php
 
-    require('config/connection.php');
+    require('connection.php');
     session_start();
-
     
     function alertMessage() {
         if (isset($_SESSION['status']) && isset($_SESSION['alertType'])) {
@@ -19,5 +18,22 @@
         $_SESSION['status'] = $message;
         $_SESSION['alertType'] = $alertType;
         header('Location: ' . $location);
+    }
+
+    function getBooks($subject = '', $search = '') {
+        global $conn;
+        $sql = "SELECT * FROM book WHERE 1=1";
+        
+        if ($subject) {
+            $sql .= " AND subject = '" . mysqli_real_escape_string($conn, $subject) . "'";
+        }
+        
+        if ($search) {
+            $search = mysqli_real_escape_string($conn, $search);
+            $sql .= " AND (title LIKE '%$search%' OR author LIKE '%$search%')";
+        }
+        
+        $result = mysqli_query($conn, $sql);
+        return $result;
     }
 ?>
